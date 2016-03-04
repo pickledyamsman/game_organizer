@@ -26,10 +26,19 @@ class BoardGameController < ApplicationController
     erb :'board_games/edit'
   end
 
+  post "/games/:id/edit" do
+    if session[:id] != BoardGame.find(params[:id]).user_id
+      redirect '/games'
+    end
+    @game = BoardGame.find(params[:id])
+    @game.update(params.select{|k|k=="name" || k =="players" || k =="manufacturer"})
+    redirect "/games"
+  end
+
   get "/games/:id" do
     redirect_if_not_logged_in
     @game = BoardGame.find(params[:id])
-    erb :'board_games/show'
+    redirect "/games"
   end
 
   post "/games/:id" do
@@ -38,7 +47,7 @@ class BoardGameController < ApplicationController
     unless BoardGame.valid_params?(params)
       redirect "/games/#{@game.id}/edit?error=invalid game"
     end
-    @game.update(params.select{|k|k=="name" || k =="capacity"})
+    @game.update(params.select{|k|k=="name" || k =="players" || k =="manufacturer"})
     redirect "/games/#{@game.id}"
   end
 
