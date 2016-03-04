@@ -1,0 +1,11 @@
+<h1>Welcome to Game Organizer!</h1>
+
+<% if logged_in? %>
+  <h2>Hello, <%= current_user.username %></h2>
+  <br>
+  <p><a href="/games/new">Create a new board game</a></p>
+  <a href="/logout">Log Out</a>
+<% else %>
+  <p><a href="/signup">Sign Up</a></p>
+  <p><a href="/login">Log In</a></p>
+<% end %>

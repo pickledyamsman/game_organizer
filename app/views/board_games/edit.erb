@@ -1,0 +1,12 @@
+<h1>Edit <%= @game.name %></h1>
+
+<form method="POST" action="/games/<%=@game.id%>">
+  <h2>Name: <input type="text" name="name" value="<%=@game.name%>"></h2>
+  <h2>Players: <input type="text" name="players" value="<%=@game.players%>"></h2>
+  <h2>Manufacturer: <input type="text" name="manufacturer" value="<%=@game.manufacturer%>"></h2>
+  <input type="submit" value="Update">
+</form>
+
+<form action="/games/<%= @game.id %>/delete">
+  <input type="submit" value="Delete Game">
+</form>

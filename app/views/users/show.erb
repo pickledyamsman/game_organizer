@@ -1,0 +1,7 @@
+<p>These are <%= @user.username %>'s' board games:</p>
+
+<% @user.board_games.each do |game| %>
+  <ul>
+    <li><a href="/games/<%= game.id %>"><%= game.name %></a></li>
+  </ul>
+<% end %>

@@ -1,0 +1,13 @@
+<h1>Here are your games:</h1>
+<% @games.each do |game| %>
+  <p>Name: <%= game.name %></p>
+  <p>Players: <%= game.players %></p>
+  <p>Manufacturer: <%= game.manufacturer %></p>
+  <a href="/games/<%=game.id%>/edit">Edit Game</a>
+  <br>
+  <a href="/games/<%=game.id%>/delete">Delete Game</a>
+  <br>
+<% end %>
+
+<h2><a href="/games/new">Create a new board game</a></h2>
+<h2><a href="/logout">Log Out</a></h2>
