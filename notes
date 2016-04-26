@@ -1,4 +1,0 @@
-[X] 1. redo early sinatra labs to further understand terminology and usage like bcrypt, salting, symbol
-[X] 2. implement model validation like rails
-3. implement params calls
-[X} 4. use helper methods in application_controller or remove them if they aren't being used.

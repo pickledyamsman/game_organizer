@@ -3,17 +3,14 @@ class UsersController < ApplicationController
   get '/users/:id' do
     if !logged_in?
       redirect '/games'
-    end
-    @user = current_user #uses helper method now
-    if !@user.nil? && @user == current_user
-      erb :'users/show'
     else
-      redirect '/games'
+      @user = current_user #uses helper method now
+      erb :'users/show'
     end
   end
   
   get '/signup' do
-    if !session[:user_id]
+    if !logged_in?
       erb :'users/new'
     else
       redirect to '/games'
@@ -22,8 +19,12 @@ class UsersController < ApplicationController
 
   post '/signup' do
     @user = User.create(:username => params[:username], :password => params[:password])
-    session[:user_id] = @user.id
-    redirect '/games'
+    if @user.save
+      session[:user_id] = @user.id
+      redirect '/games'
+    else
+      redirect '/signup?error=You could not sign in'
+    end
   end
 
   get '/login' do
