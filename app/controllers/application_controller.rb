@@ -13,7 +13,8 @@ class ApplicationController < Sinatra::Base
     erb :index
   end
 
-  helpers do
+  helpers do 
+    # use helper methods or remove methods that are not being used
     def redirect_if_not_logged_in
       if !logged_in?
         redirect "/login?error=You need to be logged in to do that"
@@ -25,7 +26,11 @@ class ApplicationController < Sinatra::Base
     end
 
     def current_user
-      User.find(session[:user_id])
+      if @user
+        return @user
+      else
+        @user = User.find(session[:user_id])
+      end
     end
   end
 end

@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     if !logged_in?
       redirect '/games'
     end
-    @user = User.find(params[:id])
+    @user = current_user #uses helper method now
     if !@user.nil? && @user == current_user
       erb :'users/show'
     else
@@ -21,17 +21,14 @@ class UsersController < ApplicationController
   end
 
   post '/signup' do
-    if params[:username].empty? || params[:password].empty?
-      redirect to '/signup'
-    else
-      @user = User.create(:username => params[:username], :password => params[:password])
-      session[:user_id] = @user.id
-      redirect '/games'
-    end
+    @user = User.create(:username => params[:username], :password => params[:password])
+    session[:user_id] = @user.id
+    redirect '/games'
   end
 
   get '/login' do
-    if !session[:user_id]
+    if logged_in?
+      !session[:user_id]
       erb :'users/login'
     else
       redirect '/games'
@@ -39,6 +36,7 @@ class UsersController < ApplicationController
   end
 
   post '/login' do
+    #helper method
     user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
